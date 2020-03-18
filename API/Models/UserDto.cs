@@ -18,5 +18,9 @@
         public bool IsConfirmed { get; set; }
 
         public bool HaveSubscription { get; set; }
+
+        public DateTime SubStartDate { get; set; }
+
+        public DateTime SubEndDate { get; set; }
     }
 }
