@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace API.Models
+{
+    public class SeriesDto : VideoDto
+    {
+        public short Season { get; set; }
+
+        public short Episode { get; set; }
+    }
+}
