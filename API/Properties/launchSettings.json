@@ -11,14 +11,14 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchUrl": "weatherforecast",
+      "launchUrl": "video/movie",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "API": {
       "commandName": "Project",
-      "launchUrl": "weatherforecast",
+      "launchUrl": "video/movie",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
