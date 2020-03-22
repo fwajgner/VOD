@@ -1,0 +1,34 @@
+<!--<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6 col-sm-4 col-lg-3" *ngFor="let video of videos">
+        <a routerLink="{{ video.altTitle }}">
+          <picture>
+            <img src="./assets/fake-images/fake-thumbnail-16x9.png" class="img-fluid" alt="{{ video.title }}">
+          </picture>
+          <div class="text-center">
+            <p class="genre">dramat</p>
+            <h5 class="title">{{ video.title }}</h5>
+          </div>
+        </a>
+    </div>
+  </div>
+</div>-->
+
+<mat-grid-list cols="4" gutterSize="2rem">
+  <div *ngFor="let video of videos">
+    <mat-grid-tile>
+    <a routerLink="{{ video.altTitle }}">
+      <picture>
+        <img src="./assets/fake-images/fake-thumbnail-16x9.png" class="img-fluid" alt="{{ video.title }}">
+      </picture>
+      <div class="text-center">
+        <p class="genre">dramat</p>
+        <h5 class="title">{{ video.title }}</h5>
+      </div>
+    </a>
+    </mat-grid-tile>
+  </div>
+</mat-grid-list>
+
+
+

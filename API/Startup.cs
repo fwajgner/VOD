@@ -17,6 +17,8 @@ namespace API
 {
     public class Startup
     {
+        private string AngularFrontDev { get; set; } = "AngularFrontDev";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +29,14 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AngularFrontDev,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200");
+                });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,8 +65,9 @@ namespace API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(AngularFrontDev);
             }
-
+         
             app.UseHttpsRedirection();
 
             app.UseRouting();

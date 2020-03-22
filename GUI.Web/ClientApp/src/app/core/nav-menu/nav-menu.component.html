@@ -1,0 +1,51 @@
+<!--<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+      <a class="navbar-brand" [routerLink]="['/']">VOD Web</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+          aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="nav-link text-dark" [routerLink]="['/']">HOME</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['video']">VOD</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>-->
+<mat-toolbar color="primary" class="navbar-menu">
+  <div [routerLink]="['/']">
+    <mat-icon>video_library</mat-icon>
+    VOD Web
+  </div>
+  <div>
+    <a mat-button [routerLink]="['/']">HOME</a>
+    <a mat-button [routerLink]="['video']">VOD</a>
+    <mat-menu #userMenu="matMenu">
+      <ng-template matMenuContent>
+        <button mat-menu-item [routerLink]="['login']">LOG IN</button>
+        <button mat-menu-item [routerLink]="['register']">REGISTER</button>
+      </ng-template>
+    </mat-menu>
+    <button mat-raised-button color="accent" [mat-menu-trigger-for]="userMenu">
+      USER
+    </button>
+  </div>
+</mat-toolbar>
