@@ -1,34 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { CoreModule } from './core/core.module';
+import { NotFoundComponent } from './core/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'video', loadChildren: () => import('./video/video.module').then(v => v.VideoModule) },
+  { path: 'login', loadChildren: () => import('./user/user.module').then(u => u.UserModule) },
+  { path: 'not-found', component: NotFoundComponent},
+  { path: '**', redirectTo: 'not-found' }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
   ],
   imports: [
+    CoreModule,
+    BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
-  ],
-  providers: [],
+    RouterModule.forRoot(routes),
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
