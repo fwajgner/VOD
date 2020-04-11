@@ -9,17 +9,19 @@ namespace API.Models
     public class VideoDto
     {
         [Required]
+        [MaxLength(100)]
         public string Title { get; set; }
 
         [Required]
+        [MaxLength(150)]
         public string AltTitle { get; set; }
 
         [MinLength(1)]
         [MaxLength(5)]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "{0} must be numeric")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "{0} must be positive number")]
         public string Duration { get; set; }
 
-        [MaxLength(300)]
+        [MaxLength(1000)]
         public string Description { get; set; }
 
         public DateTime? ReleaseYear { get; set; }
@@ -27,6 +29,6 @@ namespace API.Models
         public List<GenreDto> Genres { get; set; }
 
         [Required]
-        public TypeDto Type { get; set; }
+        public string TypeName { get; set; }
     }
 }

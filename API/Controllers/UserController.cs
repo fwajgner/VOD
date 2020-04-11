@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -24,18 +24,13 @@ namespace API.Controllers
                     UserName = "User3", Email = "user3@test.com", CreationDate = DateTime.Now }
             };
 
-        public UserController()
-        {
-
-        }
-
         [HttpGet]
         public ActionResult<List<UserDetailsDto>> GetAll()
         {
             return Ok(userDtos);
         }
 
-        [HttpGet("with-id/{id}")]
+        [HttpGet("byId/{id}")]
         public ActionResult<UserDetailsDto> GetById(string id)
         {
             UserDetailsDto s = userDtos.FirstOrDefault(s => s.Id.ToString() == id);

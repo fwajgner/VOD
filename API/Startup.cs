@@ -1,34 +1,47 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.OpenApi.Models;
-
 namespace API
 {
-    public class Startup
-    {
-        private string AngularFrontDev { get; set; } = "AngularFrontDev";
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.HttpsPolicy;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using Swashbuckle.AspNetCore.Swagger;
+    using Microsoft.OpenApi.Models;
+    using Context;
+    using Microsoft.EntityFrameworkCore;
+    using Entities;
+    using API.Services;
+    using API.Services.Interfaces;
 
+    public class Startup
+    {        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+
+        private string AngularFrontDev { get; } = "AngularFrontDev";
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("MigrationsLib"))
+                );
+
             services.AddCors(options =>
             {
                 options.AddPolicy(AngularFrontDev,
@@ -37,7 +50,12 @@ namespace API
                     builder.WithOrigins("http://localhost:4200");
                 });
             });
-            services.AddControllers();
+
+            services.TryAddScoped<IVideoService, VideoService>();
+            services.TryAddScoped<IGenreService, GenreService>();
+            services.TryAddScoped<ITypeService, TypeService>();
+            services.TryAddScoped<IUserService, UserService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
@@ -56,7 +74,7 @@ namespace API
                         Url = new Uri("http://www.apache.org/licenses/LICENSE-2.0")
                     }
                 });
-            });
+            });           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +101,15 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();               
-            });       
+            });
+            
+            using (IServiceScope serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                ApplicationDbContext dbContext = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                
+                dbContext.Database.Migrate();
+                DbSeeder.Seed(dbContext);
+            }
         }
     }
 }

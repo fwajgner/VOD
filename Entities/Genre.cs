@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model
+namespace Entities
 {
-    public class Genre
+    public class Genre : BaseClass
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
-        public DateTime ModificationDate { get; set; }
+        public virtual ICollection<VideoGenre> VideoLinks { get; set; }
     }
 }
