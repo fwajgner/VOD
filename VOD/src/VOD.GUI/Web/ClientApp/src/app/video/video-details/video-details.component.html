@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <video controls>
+      <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div class="row">
+    <div class="col-8 vod-description">
+      <h1>{{videoDetails.title}}</h1>
+      <div class="row">
+        <div class="col-sm-4">
+          <img src="./assets/fake-images/fake-thumbnail-16x9.png" class="img-fluid" alt="{{ videoDetails.title }}">
+        </div>
+        <div class="col-sm-8">
+          <p>{{videoDetails.description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 vod-details">
+      <ng-container *ngIf="isSeries">
+        <div>Episode: <span>{{videoDetails.episode}}</span></div>
+        <div>Season: <span>{{videoDetails.season}}</span></div>
+      </ng-container>
+      <div>Tags: <span>{{videoDetails.genres}}</span></div>
+      <div>Duration: <span>{{videoDetails.duration}}</span></div>
+      <div>Release year: <span>{{videoDetails.releaseYear | date: "yyyy"}}</span></div>
+      <div>Kind: <span>{{videoDetails.kind}}</span></div>
+    </div>
+  </div>
+</div>
+

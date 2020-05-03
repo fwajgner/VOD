@@ -1,0 +1,62 @@
+[
+  {
+    "Id": "eaa0B9d4-4A2d-496e-8a68-a36cd0758abb",
+    "Title": "The Green Mile",
+    "AltTitle": "the-green-mile",
+    "Duration": 189,
+    "Description": "The Green Mile description",
+    "IsInactive": false,
+    "ReleaseYear": "1999-12-06T00:00:00+00:00",
+    "Season": null,
+    "Episode": null,
+    "GenreId": "2af1ad8c-60df-4d40-a6c7-d68da49d006a",
+    "Genre": null,
+    "KindId": "6fa1bc43-ee6c-4d60-a2c8-9eb1a0494fd5",
+    "Kind": null
+  },
+  {
+    "Id": "193d7aff-9bf5-479f-9ce5-20330846bc51",
+    "Title": "Breaking Bad",
+    "AltTitle": "breaking-bad-s01e01",
+    "Duration": 58,
+    "Description": "breaking bad s01e01 description",
+    "IsInactive": false,
+    "ReleaseYear": "2008-01-20T00:00:00+00:00",
+    "Season": 1,
+    "Episode": 1,
+    "GenreId": "9dc0d6f2-a3d8-41a9-8393-d832c0b7a6e9",
+    "Genre": null,
+    "KindId": "2fd37626-0b1d-4d51-a243-0bc4266a7a99",
+    "Kind": null
+  },
+  {
+    "Id": "d042d01a-1839-4558-ba94-ffc7f9237f45",
+    "Title": "Breaking Bad",
+    "AltTitle": "breaking-bad-s05e16",
+    "Duration": 55,
+    "Description": "breaking bad s05e16 description",
+    "IsInactive": false,
+    "ReleaseYear": "2013-09-29T00:00:00+00:00",
+    "Season": 5,
+    "Episode": 16,
+    "GenreId": "9dc0d6f2-a3d8-41a9-8393-d832c0b7a6e9",
+    "Genre": null,
+    "KindId": "2fd37626-0b1d-4d51-a243-0bc4266a7a99",
+    "Kind": null
+  },
+  {
+    "Id": "0ed402cc-9c42-4180-acae-14bf07b7aa53",
+    "Title": "The Shawshank Redemption",
+    "AltTitle": "the-Shawshank-redemption",
+    "Duration": 144,
+    "Description": "the-Shawshank-redemption description",
+    "IsInactive": true,
+    "ReleaseYear": "1994-09-10T00:00:00+00:00",
+    "Season": null,
+    "Episode": null,
+    "GenreId": "2af1ad8c-60df-4d40-a6c7-d68da49d006a",
+    "Genre": null,
+    "KindId": "6fa1bc43-ee6c-4d60-a2c8-9eb1a0494fd5",
+    "Kind": null
+  }
+]
