@@ -43,6 +43,7 @@ namespace VOD.GUI.Web
             }
 
             //app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {

@@ -1,5 +1,6 @@
 ﻿namespace VOD.API.Controllers
 {
+    using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -23,7 +24,7 @@
         private IKindService KindService { get; }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
+        public async Task<IActionResult> Get([FromQuery] int pageSize = 30, [FromQuery] int pageIndex = 0)
         {
             IEnumerable<KindResponse> result = await KindService.GetKindAsync();
 

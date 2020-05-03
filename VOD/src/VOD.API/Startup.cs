@@ -24,14 +24,15 @@ namespace VOD.API
             Configuration = configuration;
         }
 
-        private string AngularFrontDev { get; } = "AngularFrontDev";
-
         public IConfiguration Configuration { get; }
+
+        public string AngularDev { get; } = "AngularFrontDev";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddVODContext(Configuration.GetConnectionString("DockerMSSQLConnection"));
+            //services.AddVODContext(Configuration.GetConnectionString("DockerMSSQLConnection"));
+            services.AddVODContext(Configuration.GetConnectionString("LocalMSSQLConnection"));
 
             services.AddScoped<IKindRepository, KindRepository>()
                     .AddScoped<IGenreRepository, GenreRepository>()
@@ -43,12 +44,12 @@ namespace VOD.API
                     .AddValidation();
 
 
-            services.AddCors(options =>
+            services.AddCors(opt =>
             {
-                options.AddPolicy(AngularFrontDev,
-                builder =>
-                {
-                    builder.WithOrigins("http://localhost:4200");
+                opt.AddPolicy(AngularDev, cfg =>
+                { 
+                    cfg.AllowAnyOrigin();
+                    //cfg.WithOrigins("http://localhost:4200");
                 });
             });
 
@@ -79,17 +80,17 @@ namespace VOD.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors(AngularFrontDev);
             }
 
-            ExecuteMigrations(app, env);
-
-            app.UseRouting();
+            //ExecuteMigrations(app, env);
+            app.UseCors(AngularDev);
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+            
             app.UseAuthorization();
-
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

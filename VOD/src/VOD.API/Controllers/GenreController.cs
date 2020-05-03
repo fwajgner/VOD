@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using VOD.API.Filters;
 using VOD.Domain.Requests.Genre;
@@ -26,7 +27,7 @@ namespace VOD.API.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
+        public async Task<IActionResult> Get([FromQuery] int pageSize = 30, [FromQuery] int pageIndex = 0)
         {
             IEnumerable<GenreResponse> result = await GenreService.GetGenreAsync();
 

@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/VOD.API",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:50856",
       "sslPort": 44350
@@ -11,14 +15,14 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchUrl": "videos",
+      "launchUrl": "api/v1/videos",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "API": {
       "commandName": "Project",
-      "launchUrl": "videos",
+      "launchUrl": "api/v1/videos",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
