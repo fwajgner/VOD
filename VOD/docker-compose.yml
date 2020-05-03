@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  vod_api:
+    container_name: vod_api
+    build:
+      context: .
+      dockerfile: containers/api/Dockerfile
+    env_file:
+      - containers/api/api.env
+    networks:
+      - my_network
+    ports:
+      - 5000:5000
+    depends_on:
+      - vod_db
+      
+  vod_db:
+    container_name: vod_db
+    image: mcr.microsoft.com/mssql/server:2017-latest 
+    networks:
+      - my_network
+    ports:
+    - 1433:1433
+    env_file:
+      - containers/db/db.env
+      
+networks:
+  my_network:
+    driver: bridge

@@ -14,6 +14,8 @@ namespace VOD.API
     using VOD.Domain.Repositories;
     using VOD.Infrastructure.Repositories;
     using VOD.Domain.Extensions;
+    using Polly;
+    using Microsoft.Data.SqlClient;
 
     public class Startup
     {        
@@ -29,7 +31,7 @@ namespace VOD.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddVODContext(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddVODContext(Configuration.GetConnectionString("DockerMSSQLConnection"));
 
             services.AddScoped<IKindRepository, KindRepository>()
                     .AddScoped<IGenreRepository, GenreRepository>()
@@ -80,7 +82,11 @@ namespace VOD.API
                 app.UseCors(AngularFrontDev);
             }
 
+            ExecuteMigrations(app, env);
+
             app.UseRouting();
+
+            app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
@@ -95,7 +101,7 @@ namespace VOD.API
                 endpoints.MapControllers();               
             });
 
-            app.UseHttpsRedirection();
+            
 
             //using (IServiceScope serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             //{
@@ -104,6 +110,23 @@ namespace VOD.API
             //    dbContext.Database.Migrate();
             //    DbSeeder.Seed(dbContext);
             //}
+        }
+
+        private void ExecuteMigrations(IApplicationBuilder app,
+         IWebHostEnvironment env)
+        {
+            if (env.EnvironmentName == "Testing") return;
+
+            var retry = Policy.Handle<SqlException>()
+                .WaitAndRetry(new TimeSpan[]
+                {
+                    TimeSpan.FromSeconds(2),
+                    TimeSpan.FromSeconds(6),
+                    TimeSpan.FromSeconds(12)
+                });
+
+            retry.Execute(() =>
+                app.ApplicationServices.GetService<VODContext>().Database.Migrate());
         }
     }
 }

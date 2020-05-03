@@ -13,18 +13,29 @@ namespace VOD.API.Extensions
     {
         public static IServiceCollection AddVODContext(this IServiceCollection services, string connectionString)
         {
-            return services.AddDbContext<VODContext>(opt =>
-            { 
-                opt.UseSqlServer(
-                    connectionString,
-                    _ => 
-                    { 
-                        _.MigrationsAssembly(typeof(Startup)
-                            .GetTypeInfo()
-                            .Assembly
-                            .GetName().Name);
-                    });
-            });
+            return services
+                //.AddEntityFrameworkSqlServer()
+                .AddDbContext<VODContext>(opt =>
+                {
+                    //opt.UseSqlServer(
+                    //    connectionString,
+                    //    _ => 
+                    //    { 
+                    //        _.MigrationsAssembly(typeof(Startup)
+                    //            .GetTypeInfo()
+                    //            .Assembly
+                    //            .GetName().Name);
+                    //    });
+                    opt.UseSqlServer(
+                         connectionString,
+                         x =>
+                         {
+                             x.MigrationsAssembly(typeof(Startup)
+                                 .GetTypeInfo()
+                                 .Assembly
+                                 .GetName().Name);
+                         });
+                });
         }
     }
 }
