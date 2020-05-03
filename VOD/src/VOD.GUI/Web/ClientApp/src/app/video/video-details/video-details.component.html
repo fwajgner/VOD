@@ -10,7 +10,7 @@
       <h1>{{videoDetails.title}}</h1>
       <div class="row">
         <div class="col-sm-4">
-          <img src="./assets/fake-images/fake-thumbnail-16x9.png" class="img-fluid" alt="{{ videoDetails.title }}">
+          <img [src]=thumbnailLink class="img-fluid" alt="{{ videoDetails.title }}">
         </div>
         <div class="col-sm-8">
           <p>{{videoDetails.description}}</p>
@@ -22,9 +22,9 @@
         <div>Episode: <span>{{videoDetails.episode}}</span></div>
         <div>Season: <span>{{videoDetails.season}}</span></div>
       </ng-container>
-      <div>Tags: <span>{{videoDetails.genres}}</span></div>
-      <div>Duration: <span>{{videoDetails.duration}}</span></div>
-      <div>Release year: <span>{{videoDetails.releaseYear | date: "yyyy"}}</span></div>
+      <div>Tags: <span>{{videoDetails.genre}}</span></div>
+      <div>Duration: <span>{{videoDetails.duration}}</span> min.</div>
+      <div>Release year: <span>{{videoDetails.releaseYear | date: "yyyy.MM.dd"}}</span></div>
       <div>Kind: <span>{{videoDetails.kind}}</span></div>
     </div>
   </div>

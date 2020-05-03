@@ -17,12 +17,12 @@
 <mat-grid-list cols="4" gutterSize="2rem">
   <div *ngFor="let video of videos">
     <mat-grid-tile>
-    <a routerLink="{{ video.altTitle }}">
+    <a routerLink="{{ video.id }}">
       <picture>
-        <img src="./assets/fake-images/fake-thumbnail-16x9.png" class="img-fluid" alt="{{ video.title }}">
+        <img [src]=imgSrc class="img-fluid" alt="{{ video.title }}">
       </picture>
       <div class="text-center">
-        <p class="genre">dramat</p>
+        <p class="genre">{{video.genre}}</p>
         <h5 class="title">{{ video.title }}</h5>
       </div>
     </a>

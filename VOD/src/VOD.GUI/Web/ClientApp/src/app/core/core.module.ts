@@ -7,7 +7,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import {MaterialModule} from '../material/material.module';
 
 const config: Config = {
-  apiUrl: 'https://localhost:44350/api'
+  apiUrl: 'https://localhost:5001/api/v1'
 };
 
 @NgModule({

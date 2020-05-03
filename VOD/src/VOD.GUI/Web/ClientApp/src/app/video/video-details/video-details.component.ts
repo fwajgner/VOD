@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Movie, Series} from '../model';
+import {VideoDetails} from '../model';
 
 @Component({
   selector: 'vid-video-details',
@@ -9,8 +9,9 @@ import {Movie, Series} from '../model';
 })
 export class VideoDetailsComponent implements OnInit {
 
-  videoDetails: Movie | Series;
+  videoDetails: VideoDetails;
   isSeries = false;
+  thumbnailLink = './assets/fake-images/fake-thumbnail-16x9.png';
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
@@ -19,8 +20,9 @@ export class VideoDetailsComponent implements OnInit {
       this.videoDetails = data.videoDetails;
     });
 
-    if ('episode' in this.videoDetails && 'season' in this.videoDetails) {
+    if (this.videoDetails.episode != null || this.videoDetails.season != null) {
       this.isSeries = true;
+      this.thumbnailLink = './assets/fake-images/fake-thumbnail-a0.png';
     }
   }
 

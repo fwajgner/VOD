@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VideoResolver } from './movie-resolver.service';
+import { VideoResolver } from './video-resolver.service';
 
 describe('VideoResolverService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
