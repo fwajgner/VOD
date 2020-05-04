@@ -22,7 +22,8 @@
             services
                 .AddScoped<IKindService, KindService>()
                 .AddScoped<IGenreService, GenreService>()
-                .AddScoped<IVideoService, VideoService>();
+                .AddScoped<IVideoService, VideoService>()
+                .AddScoped<IUserService, UserService>();
 
             return services;
         }

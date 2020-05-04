@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.TestHost;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
 
     public class InMemoryApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
     {
@@ -22,6 +23,8 @@
                         .Options;
 
                     services.AddScoped<VODContext>(serviceProvider => new TestVODContext(options));
+
+                    services.Replace(ServiceDescriptor.Scoped(_ => new UsersContextFactory().InMemoryUserManager));
 
                     ServiceProvider sp = services.BuildServiceProvider();
 

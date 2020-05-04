@@ -1,107 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace VOD.API.Controllers
+﻿namespace VOD.API.Controllers
 {
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using VOD.API.Filters;
+    using VOD.Domain.Requests.User;
+    using VOD.Domain.Responses;
+    using VOD.Domain.Services;
+
+    [Authorize]
     [Route("api/v1/users")]
     [ApiController]
+    [JsonException]
     public class UserController : ControllerBase
     {
-        /*private List<UserDetailsDto> userDtos = new List<UserDetailsDto>()
-            {
-                new UserDetailsDto { Id = new Guid("00000000-0000-0000-0000-000000000000"), 
-                    UserName = "User0", Email = "user0@test.com", CreationDate = DateTime.Now },
-                new UserDetailsDto { Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                    UserName = "User1", Email = "user1@test.com", CreationDate = DateTime.Now },
-                new UserDetailsDto { Id = new Guid("22222222-2222-2222-2222-222222222222"),
-                    UserName = "User2", Email = "user2@test.com", CreationDate = DateTime.Now },
-                new UserDetailsDto { Id = new Guid("33333333-3333-3333-3333-333333333333"),
-                    UserName = "User3", Email = "user3@test.com", CreationDate = DateTime.Now }
-            };
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        private readonly IUserService _userService;
 
         [HttpGet]
-        public ActionResult<List<UserDetailsDto>> GetAll()
+        public async Task<IActionResult> Get()
         {
-            return Ok(userDtos);
+            Claim claim = HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email);
+
+            if (claim == null) return Unauthorized();
+
+            UserResponse token = await _userService.GetUserAsync(new GetUserRequest { Email = claim.Value });
+            
+            return Ok(token);
         }
 
-        [HttpGet("byId/{id}")]
-        public ActionResult<UserDetailsDto> GetById(string id)
+        [AllowAnonymous]
+        [HttpPost("auth")]
+        public async Task<IActionResult> SignIn(SignInRequest request)
         {
-            UserDetailsDto s = userDtos.FirstOrDefault(s => s.Id.ToString() == id);
+            TokenResponse token = await _userService.SignInAsync(request);
 
-            if (s == null)
-            {
-                return NotFound();
-            }
+            if (token == null) return BadRequest();
 
-            return Ok(s);
+            return Ok(token);
         }
 
-        [HttpGet("{userName}")]
-        public ActionResult<UserDetailsDto> GetByUserName(string userName)
-        {
-            UserDetailsDto s = userDtos.FirstOrDefault(s => s.UserName == userName);
-
-            if (s == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(s);
-        }
-
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Post([FromBody]UserDetailsDto model)
+        public async Task<IActionResult> SignUp(SignUpRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            userDtos.Add(model);
-
-            string key = model.UserName;
-            return Created($"api/user/" + key, null);
+            UserResponse user = await _userService.SignUpAsync(request);
+            
+            if (user == null) return BadRequest();
+            
+            return CreatedAtAction(nameof(Get), new { }, null);
         }
-
-        [HttpPut("{userName}")]
-        public ActionResult Put(string userName, [FromBody]UserDetailsDto model)
-        {
-            UserDetailsDto s = userDtos.FirstOrDefault(s => s.UserName == userName);
-
-            if (s == null)
-            {
-                return NotFound();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            userDtos[userDtos.IndexOf(s)] = model;
-
-            return NoContent();
-        }
-
-        [HttpDelete("{userName}")]
-        public ActionResult Delete(string userName)
-        {
-            UserDetailsDto s = userDtos.FirstOrDefault(s => s.UserName == userName);
-
-            if (s == null)
-            {
-                return NotFound();
-            }
-
-            userDtos.Remove(s);
-
-            return NoContent();
-        }*/
     }
 }

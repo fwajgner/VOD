@@ -42,7 +42,7 @@
         #region Private Methods
         private static void CreateUsers(VODContext dbContext)
         {
-            ApplicationUser admin = new ApplicationUser()
+            User admin = new User()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = "Admin",
@@ -51,7 +51,7 @@
             };
 
 #if DEBUG
-            ApplicationUser user0 = new ApplicationUser()
+            User user0 = new User()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = "User0",
@@ -61,7 +61,7 @@
                 SubEndDate = DateTime.Now.AddMonths(1)
             };
 
-            ApplicationUser user1 = new ApplicationUser()
+            User user1 = new User()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = "User1",

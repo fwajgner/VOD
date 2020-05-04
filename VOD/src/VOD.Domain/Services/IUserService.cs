@@ -1,14 +1,20 @@
 ﻿namespace VOD.Domain.Services
 {
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
+    using VOD.Domain.Requests.User;
+    using VOD.Domain.Responses;
 
-    /*public interface IUserService : IService<UserDetailsDto>
+    public interface IUserService
     {
-        IAsyncEnumerable<UserDetailsDto> ReadAllWithSubscription();
+        Task<UserResponse> GetUserAsync(GetUserRequest request,
+            CancellationToken cancellationToken = default);
 
-        IAsyncEnumerable<UserDetailsDto> ReadAllWithoutSubscription();
+        Task<UserResponse> SignUpAsync(SignUpRequest request,
+            CancellationToken cancellationToken = default);
 
-        Task<UserDetailsDto> LockAccountAsync(string userName);
-    }*/
+        Task<TokenResponse> SignInAsync(SignInRequest request,
+            CancellationToken cancellationToken = default);
+    }
 }

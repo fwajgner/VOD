@@ -10,6 +10,7 @@ namespace VOD.API
     using Microsoft.OpenApi.Models;
     using Microsoft.EntityFrameworkCore;
     using VOD.Infrastructure;
+    using VOD.Infrastructure.Extensions;
     using VOD.API.Extensions;
     using VOD.Domain.Repositories;
     using VOD.Infrastructure.Repositories;
@@ -36,7 +37,9 @@ namespace VOD.API
 
             services.AddScoped<IKindRepository, KindRepository>()
                     .AddScoped<IGenreRepository, GenreRepository>()
-                    .AddScoped<IVideoRepository, VideoRepository>();
+                    .AddScoped<IVideoRepository, VideoRepository>()
+                    .AddScoped<IUserRepository, UserRepository>()
+                    .AddTokenAuthentication(Configuration);
 
             services.AddMappers()
                     .AddServices()
@@ -48,8 +51,9 @@ namespace VOD.API
             {
                 opt.AddPolicy(AngularDev, cfg =>
                 { 
-                    cfg.AllowAnyOrigin();
-                    //cfg.WithOrigins("http://localhost:4200");
+                    //cfg.AllowAnyOrigin();
+                    cfg.WithOrigins("http://localhost:4200");
+                    cfg.WithOrigins("https://localhost:4201");
                 });
             });
 
@@ -83,12 +87,14 @@ namespace VOD.API
             }
 
             //ExecuteMigrations(app, env);
-            app.UseCors(AngularDev);
-
             app.UseHttpsRedirection();
 
+            app.UseCors(AngularDev);
+
             app.UseRouting();
-            
+
+            app.UseAuthentication();
+
             app.UseAuthorization();
             
             app.UseSwagger();

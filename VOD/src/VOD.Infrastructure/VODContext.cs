@@ -3,12 +3,13 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using VOD.Domain.Entities;
     using VOD.Domain.Repositories;
     using VOD.Infrastructure.SchemaDefinitions;
 
-    public class VODContext : DbContext, IUnitOfWork
+    public class VODContext : IdentityDbContext<User>, IUnitOfWork
     {
         #region Consctructors
 
@@ -23,8 +24,6 @@
         #region Properties
 
         public const string DEFAULT_SCHEMA = "vod";
-
-        public DbSet<ApplicationUser> Users { get; set; }
 
         public DbSet<Genre> Genres { get; set; }
 
