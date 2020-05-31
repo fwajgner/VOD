@@ -108,7 +108,7 @@
 
         [Theory]
         [InlineData("193d7aff-9bf5-479f-9ce5-20330846bc51")]
-        [InlineData("0ed402cc-9c42-4180-acae-14bf07b7aa53")]
+        [InlineData("d042d01a-1839-4558-ba94-ffc7f9237f45")]
         public async Task GetVideo_should_return_video_with_specified_id(string guid)
         {
             //Arrange

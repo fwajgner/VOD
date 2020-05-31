@@ -22,11 +22,14 @@ const routes: Routes = [
     HomeComponent,
   ],
   imports: [
+    BrowserModule,
     CoreModule,
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+    initialNavigation: 'enabled'
+}),
     ],
   bootstrap: [AppComponent]
 })

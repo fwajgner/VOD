@@ -25,7 +25,7 @@
         private readonly IUserService _userService;
 
         [Fact]
-        public async Task SignIn_with_invalid_user_should_return_a_valid_token_response()
+        public async Task SignIn_with_invalid_user_should_not_return_a_valid_token_response()
         {
             //Arrange
             SignInRequest signInRequest = new SignInRequest

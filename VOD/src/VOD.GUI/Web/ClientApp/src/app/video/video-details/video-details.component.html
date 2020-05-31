@@ -1,32 +1,81 @@
+<mat-video *ngIf="currentUser; else loginRequired" title="{{videoDetails.title}}"
+           [autoplay]="false"
+           [preload]="false"
+           [fullscreen]="true"
+           [download]="false"
+           color="primary"
+           spinner="spin"
+           poster="{{thumbnailLink}}"
+           [keyboard]="true"
+           [src]=mediaUrl>
+</mat-video>
+
 <div class="container">
-  <div class="row">
-    <video controls>
-      <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
+<!--  <div class="row">
+    <video oncontextmenu="return false;" controls controlsList="nodownload">
+      <source [src]=mediaUrl type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
-  <div class="row">
+-->
+  <ng-template #loginRequired>
+    <div class="row justify-content-center mt-5">
+      <h1>Please log in to watch this video.</h1>
+    </div>
+  </ng-template>
+
+  <div class="row vod-title">
+    <h1>{{videoDetails.title}}</h1>
+  </div>
+
+  <div class="row bottom-row">
+
     <div class="col-8 vod-description">
-      <h1>{{videoDetails.title}}</h1>
+
       <div class="row">
+
         <div class="col-sm-4">
           <img [src]=thumbnailLink class="img-fluid" alt="{{ videoDetails.title }}">
         </div>
+
         <div class="col-sm-8">
           <p>{{videoDetails.description}}</p>
         </div>
+
       </div>
+
     </div>
+
     <div class="col-4 vod-details">
-      <ng-container *ngIf="isSeries">
-        <div>Episode: <span>{{videoDetails.episode}}</span></div>
-        <div>Season: <span>{{videoDetails.season}}</span></div>
-      </ng-container>
-      <div>Tags: <span>{{videoDetails.genre}}</span></div>
-      <div>Duration: <span>{{videoDetails.duration}}</span> min.</div>
-      <div>Release year: <span>{{videoDetails.releaseYear | date: "yyyy.MM.dd"}}</span></div>
-      <div>Kind: <span>{{videoDetails.kind}}</span></div>
+
+      <div class="row">
+
+        <div class="col-4">
+          <ng-container *ngIf="isSeries">
+            <div>Episode:</div>
+            <div>Season:</div>
+          </ng-container>
+          <div>Tags:</div>
+          <div>Duration:</div>
+          <div>Release year:</div>
+          <div>Kind:</div>
+        </div>
+
+        <div class="col-8">
+          <ng-container *ngIf="isSeries">
+            <div>{{videoDetails.episode}}</div>
+            <div>{{videoDetails.season}}</div>
+          </ng-container>
+          <div>{{videoDetails.genre.name}}</div>
+          <div>{{videoDetails.duration}}</div>
+          <div>{{videoDetails.releaseYear | date: "yyyy.MM.dd"}}</div>
+          <div>{{videoDetails.kind.name}}</div>
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 </div>
 

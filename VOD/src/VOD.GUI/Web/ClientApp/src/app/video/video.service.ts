@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { CONFIG, Config } from '../model';
-import {Video, VideoDetails} from './model';
+import {VideoDetails, VideoPage} from './model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +10,23 @@ export class VideoService {
 
   constructor(private httpClient: HttpClient, @Inject(CONFIG) private config: Config) { }
 
-  getVideos() {
-   return this.httpClient.get<Video[]>(`${this.config.apiUrl}/videos`);
+  getVideos(params?: HttpParams) {
+   return this.httpClient.get<VideoPage>(`${this.config.apiUrl}/videos`, { params });
   }
 
   getVideoById(id: string) {
     return this.httpClient.get<VideoDetails>(`${this.config.apiUrl}/videos/${id}`);
   }
 
-  getMovies() {
-    return this.httpClient.get<Video[]>(`${this.config.apiUrl}/kinds/4e3b9799-4abc-4db1-734b-08d7eccf2be6/videos`);
+  getMovies(params?: HttpParams) {
+    return this.httpClient.get<VideoPage>(`${this.config.apiUrl}/kinds/13ae2883-f1c0-459a-01b5-08d804c04036/videos`, { params });
   }
 
-  getSeries() {
-    return this.httpClient.get<Video[]>(`${this.config.apiUrl}/kinds/ba9e4454-4f3f-4a55-734c-08d7eccf2be6/videos`);
+  getSeries(params?: HttpParams) {
+    return this.httpClient.get<VideoPage>(`${this.config.apiUrl}/kinds/78f4cb5f-121a-4fe2-01b6-08d804c04036/videos`, { params });
+  }
+
+  getMedia(id: string) {
+    return `${this.config.apiUrl}/videos/${id}/media`;
   }
 }

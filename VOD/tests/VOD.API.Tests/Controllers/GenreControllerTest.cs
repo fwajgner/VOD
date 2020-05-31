@@ -26,8 +26,6 @@
 
         private InMemoryApplicationFactory<Startup> Factory { get; }
 
-        private Fixture GenData { get; set; } = new Fixture();
-
         private string Url { get; } = "/api/v1/genres";
 
         #endregion

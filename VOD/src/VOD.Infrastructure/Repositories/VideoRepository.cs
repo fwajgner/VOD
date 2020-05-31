@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using System.Threading.Tasks;
     using VOD.Domain.Entities;
@@ -40,7 +41,7 @@
         {
             Video video = await _context.Videos
                 .AsNoTracking()
-                .Where(x => x.Id == id)
+                .Where(x => x.Id == id && !x.IsInactive)
                 .Include(x => x.Genre)
                 .Include(x => x.Kind).FirstOrDefaultAsync();
 

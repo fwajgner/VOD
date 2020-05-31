@@ -17,6 +17,8 @@ namespace VOD.API
     using VOD.Domain.Extensions;
     using Polly;
     using Microsoft.Data.SqlClient;
+    using Microsoft.AspNetCore.Identity;
+    using VOD.Domain.Entities;
 
     public class Startup
     {        
@@ -51,9 +53,13 @@ namespace VOD.API
             {
                 opt.AddPolicy(AngularDev, cfg =>
                 { 
-                    //cfg.AllowAnyOrigin();
-                    cfg.WithOrigins("http://localhost:4200");
-                    cfg.WithOrigins("https://localhost:4201");
+                    cfg.AllowAnyOrigin();
+                    //cfg.WithOrigins("http://localhost:4200");
+                    //cfg.WithOrigins("http://localhost:4100");
+                    //cfg.WithOrigins("https://localhost:4201");
+                    //cfg.WithOrigins("https://localhost:4101");
+                    cfg.AllowAnyHeader();
+                    cfg.AllowAnyMethod();
                 });
             });
 
@@ -108,14 +114,16 @@ namespace VOD.API
                 endpoints.MapControllers();               
             });
 
-            
 
+          
             //using (IServiceScope serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             //{
             //    VODContext dbContext = serviceScope.ServiceProvider.GetService<VODContext>();
-                
+            //    var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+            //    var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
+
             //    dbContext.Database.Migrate();
-            //    DbSeeder.Seed(dbContext);
+            //    DbSeeder.Seed(dbContext, roleManager, userManager);
             //}
         }
 

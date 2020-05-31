@@ -100,7 +100,7 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist-server",
-            "main": "src/main.ts",
+            "main": "server.ts",
             "tsConfig": "src/tsconfig.server.json"
           },
           "configurations": {
@@ -120,6 +120,32 @@
               "extractLicenses": true,
               "vendorChunk": false
             }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "GUI.Web:build",
+            "serverTarget": "GUI.Web:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "GUI.Web:build:production",
+              "serverTarget": "GUI.Web:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "GUI.Web:build:production",
+            "serverTarget": "GUI.Web:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {}
           }
         }
       }

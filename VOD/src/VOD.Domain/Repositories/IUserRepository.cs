@@ -17,5 +17,8 @@
 
         Task<User> GetByEmailAsync(string requestEmail,
             CancellationToken cancellationToken = default);
+
+        Task<IEnumerable<string>> GetUserRolesAsync(string requestEmail,
+            CancellationToken cancellationToken = default);
     }
 }

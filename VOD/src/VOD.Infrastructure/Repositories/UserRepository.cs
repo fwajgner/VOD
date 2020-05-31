@@ -22,6 +22,8 @@
 
         private readonly UserManager<User> _userManager;
 
+        private string RegisteredUser { get; set; } = "RegisteredUser";
+
         public async Task<bool> AuthenticateAsync(string email, string password, CancellationToken cancellationToken = default)
         {
             SignInResult result = await _signInManager.PasswordSignInAsync(email, password, false, false);
@@ -35,12 +37,18 @@
                 .FirstOrDefaultAsync(u => u.Email == requestEmail, cancellationToken);
         }
 
+        public async Task<IEnumerable<string>> GetUserRolesAsync(string requestEmail, CancellationToken cancellationToken = default)
+        {
+            return await _userManager.GetRolesAsync(await this.GetByEmailAsync(requestEmail, cancellationToken));
+        }
+
         public async Task<bool> SignUpAsync(User user, string password, CancellationToken cancellationToken = default)
         {
             user.CreationDate = DateTimeOffset.Now;
             IdentityResult result = await _userManager.CreateAsync(user, password);
+            IdentityResult roleResult = await _userManager.AddToRoleAsync(user, RegisteredUser);
 
-            return result.Succeeded;
+            return result.Succeeded && roleResult.Succeeded;
         }
 
         //public async Task<bool> EditUserAsync(User user, CancellationToken cancellationToken = default)

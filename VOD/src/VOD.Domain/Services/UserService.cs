@@ -15,6 +15,7 @@
     using System.IdentityModel.Tokens.Jwt;
     using System.Text;
     using System.Security.Claims;
+    using Microsoft.AspNetCore.Identity;
 
     public class UserService : IUserService
     {
@@ -42,10 +43,11 @@
         public async Task<TokenResponse> SignInAsync(SignInRequest request, CancellationToken cancellationToken = default)
         {
             bool response = await _userRepository.AuthenticateAsync(request.Email, request.Password, cancellationToken);
+            IEnumerable<string> roles = await _userRepository.GetUserRolesAsync(request.Email, cancellationToken);
 
             return response == false ? null : new TokenResponse
             {
-                Token = GenerateSecurityToken(request)
+                Token = GenerateSecurityToken(request, roles.First())
             };
         }
 
@@ -67,7 +69,7 @@
             };
         }
 
-        private string GenerateSecurityToken(SignInRequest request)
+        private string GenerateSecurityToken(SignInRequest request, string userRole)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(_authenticationSettings.Secret);
@@ -76,7 +78,8 @@
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Email, request.Email)
+                    new Claim(ClaimTypes.Email, request.Email),
+                    new Claim(ClaimTypes.Role, userRole)
                 }),
                 Expires = DateTime.UtcNow.AddDays(_authenticationSettings.ExpirationDays),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),

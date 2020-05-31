@@ -13,7 +13,12 @@
     </div>
   </div>
 </div>-->
-
+<mat-paginator
+  [pageIndex]="defaultPageIndex"
+  [pageSize]="defaultPageSize"
+  [pageSizeOptions]="[15, 30, 50, 100]"
+  (page)="getData($event)">
+</mat-paginator>
 <mat-grid-list cols="4" gutterSize="2rem">
   <div *ngFor="let video of videos">
     <mat-grid-tile>
@@ -22,13 +27,14 @@
         <img [src]=imgSrc class="img-fluid" alt="{{ video.title }}">
       </picture>
       <div class="text-center">
-        <p class="genre">{{video.genre}}</p>
+        <p class="genre">{{video.genre.name}}</p>
         <h5 class="title">{{ video.title }}</h5>
       </div>
     </a>
     </mat-grid-tile>
   </div>
 </mat-grid-list>
+
 
 
 

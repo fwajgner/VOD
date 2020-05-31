@@ -1,5 +1,6 @@
 ﻿namespace VOD.API.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -52,13 +53,24 @@
 
         [HttpGet("{id:guid}/videos")]
         [KindExists]
-        public async Task<IActionResult> GetVideosByKindId(Guid id)
+        public async Task<IActionResult> GetVideosByKindId(Guid id, [FromQuery] int pageSize = 30, [FromQuery] int pageIndex = 0)
         {
             IEnumerable<VideoResponse> result = await KindService.GetVideosByKindIdAsync(new GetKindRequest() { Id = id });
 
-            return Ok(result);
+            int totalItems = result.Count();
+
+            IEnumerable<VideoResponse> videosOnPage = result
+                .OrderBy(x => x.Title)
+                .Skip(pageSize * pageIndex)
+                .Take(pageSize);
+
+            PaginatedResponseModel<VideoResponse> model = new PaginatedResponseModel<VideoResponse>
+                (pageIndex, pageSize, totalItems, videosOnPage);
+
+            return Ok(model);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public async Task<IActionResult> Post(AddKindRequest request)
         {

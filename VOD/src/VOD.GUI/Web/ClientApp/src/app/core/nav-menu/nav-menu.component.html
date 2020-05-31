@@ -40,8 +40,13 @@
     <a mat-button [routerLink]="['videos']">VOD</a>
     <mat-menu #userMenu="matMenu">
       <ng-template matMenuContent>
-        <button mat-menu-item [routerLink]="['login']">LOG IN</button>
-        <button mat-menu-item [routerLink]="['register']">REGISTER</button>
+        <ng-container *ngIf="currentUser; else loginRegisterBlock">
+          <button mat-menu-item (click)="logout()">LOGOUT</button>
+        </ng-container>
+        <ng-template #loginRegisterBlock>
+          <button mat-menu-item [routerLink]="['login']">LOG IN</button>
+          <button mat-menu-item [routerLink]="['register']">REGISTER</button>
+        </ng-template>
       </ng-template>
     </mat-menu>
     <button mat-raised-button color="accent" [mat-menu-trigger-for]="userMenu">

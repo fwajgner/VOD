@@ -1,3 +1,7 @@
+.vod-title {
+ margin: 1rem 0 7px 0;
+}
+
 .vod-details {
   position: relative;
 }
@@ -6,10 +10,16 @@
   position: relative;
 }
 
-@media only screen and (min-width: 900px) {
-  .video-card {
-    width: 50%;
-    margin: auto;
-  }
+.bottom-row {
+  margin-bottom: 3rem;
+}
+
+:host::ng-deep .progress{
+  background-color: unset !important;
+  padding: 0 0 50px 0;
+}
+
+:host::ng-deep mat-seek-progress-control{
+  width: 100%;
 }
 

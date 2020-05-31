@@ -39,11 +39,11 @@ const routes: Routes = [
     VideoDetailsComponent,
     VideoHomeComponent,
     MovieComponent,
-    SeriesComponent,
+    SeriesComponent
   ],
   imports: [
     SharedModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes)
   ],
   exports: [
     VideoHomeComponent

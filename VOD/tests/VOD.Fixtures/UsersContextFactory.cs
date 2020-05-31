@@ -52,7 +52,10 @@
 
             fakeUserService.Setup(x => x.GetByEmailAsync(It.IsAny<string>(), CancellationToken.None))
                 .ReturnsAsync((string email, CancellationToken token) => _users.First(x => x.Email == email));
-            
+
+            fakeUserService.Setup(x => x.GetUserRolesAsync(It.IsAny<string>(), CancellationToken.None))
+                .ReturnsAsync((string email, CancellationToken token) => new List<string>() { "Test Role" });
+
             fakeUserService.Setup(x => x.SignUpAsync(It.IsAny<User>(), It.IsAny<string>(), CancellationToken.None))
                 .ReturnsAsync((User user, string password, CancellationToken token) =>
                 {

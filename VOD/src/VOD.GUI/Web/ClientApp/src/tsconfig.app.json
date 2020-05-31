@@ -6,6 +6,10 @@
   },
   "exclude": [
     "src/test.ts",
-    "**/*.spec.ts"
+    "../src/app/app.server.module.ts",
+    "**/*.spec.ts",
+    "test.ts",
+    "main.server.ts",
+    "../../ClientApp/src/environments/*.ts"
   ]
 }

@@ -1,19 +1,21 @@
 ﻿namespace VOD.Infrastructure
 {
+    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using VOD.Domain.Entities;
 
     public static class DbSeeder
     {
         #region Public Methods
 
-        public static void Seed(VODContext dbContext)
+        public static void Seed(VODContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
             if (!dbContext.Users.Any())
             {
-                CreateUsers(dbContext);
+                CreateUsersAsync(dbContext, roleManager, userManager).Wait();
             }
 
             if (!dbContext.Genres.Any())
@@ -40,39 +42,74 @@
         #endregion
 
         #region Private Methods
-        private static void CreateUsers(VODContext dbContext)
+        private static async Task CreateUsersAsync(VODContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
         {
+            string roleAdmin = "Administrator";
+            string roleRegisteredUser = "RegisteredUser";
+
+            if (!await roleManager.RoleExistsAsync(roleAdmin))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleAdmin));
+            }
+            if (!await roleManager.RoleExistsAsync(roleRegisteredUser))
+            {
+                await roleManager.CreateAsync(new IdentityRole(roleRegisteredUser));
+            }
+
             User admin = new User()
             {
-                Id = Guid.NewGuid().ToString(),
-                UserName = "Admin",
-                Email = "admin@admin.com",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = "admin@vod.com",
+                Email = "admin@vod.com",
                 CreationDate = DateTime.Now
             };
+
+            if (await userManager.FindByEmailAsync(admin.Email) == null)
+            {
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(admin, roleAdmin);
+                await userManager.AddToRoleAsync(admin, roleRegisteredUser);
+                admin.EmailConfirmed = true;
+                admin.LockoutEnabled = false;
+            }
 
 #if DEBUG
             User user0 = new User()
             {
-                Id = Guid.NewGuid().ToString(),
-                UserName = "User0",
-                Email = "user0@test.com",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Name = "User0",
+                UserName = "user0@vod.com",
+                Email = "user0@vod.com",
                 CreationDate = DateTime.Now,
                 SubStartDate = DateTime.Now,
                 SubEndDate = DateTime.Now.AddMonths(1)
             };
 
+            if (await userManager.FindByEmailAsync(user0.Email) == null)
+            {
+                await userManager.CreateAsync(user0, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user0, roleRegisteredUser);
+                user0.EmailConfirmed = true;
+            }
+
             User user1 = new User()
             {
-                Id = Guid.NewGuid().ToString(),
-                UserName = "User1",
-                Email = "user1@test.com",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Name = "User1",
+                UserName = "user1@vod.com",
+                Email = "user1@vod.com",
                 CreationDate = DateTime.Now
             };
 
-            dbContext.AddRange(admin, user0, user1);
+            if (await userManager.FindByEmailAsync(user1.Email) == null)
+            {
+                await userManager.CreateAsync(user1, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user1, roleRegisteredUser);
+                user1.EmailConfirmed = true;
+            }
 #endif
 
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
         private static void CreateGenres(VODContext dbContext)
