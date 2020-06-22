@@ -9,4 +9,4 @@ Wykorzystane technologie:
 - Docker
 
 Zdjęcie poglądowe:
-<img src="https://drive.google.com/uc?export=view&id=17-5cof-H4eXVyZ3oJChUjHClBi9MRiOj"></img>
+<img src="https://images.tinypic.pl/i/01008/v86d859ab88d.png"></img>
