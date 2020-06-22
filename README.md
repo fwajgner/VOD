@@ -1,12 +1,12 @@
 # VOD
-serwis wideo na żądanie
+video-on-demand service
 
-Wykorzystane technologie:
+Used technologies:
 - .NET Core
 - Angular 9
 - TypeScript, JavaScript
 - HTML, CSS Bootstrap
 - Docker
 
-Zdjęcie poglądowe:
+Screenshot:
 <img src="https://images.tinypic.pl/i/01008/v86d859ab88d.png"></img>
