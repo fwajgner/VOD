@@ -1,8 +1,8 @@
 # VOD
 video-on-demand service
 
-Used technologies:
-- .NET Core
+Technologies used:
+- .NET Core, ASP.NET Core
 - Angular 9
 - TypeScript, JavaScript
 - HTML, CSS Bootstrap
