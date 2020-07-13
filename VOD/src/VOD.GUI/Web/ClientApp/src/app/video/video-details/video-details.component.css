@@ -1,0 +1,25 @@
+.vod-title {
+ margin: 1rem 0 7px 0;
+}
+
+.vod-details {
+  position: relative;
+}
+
+.vod-description {
+  position: relative;
+}
+
+.bottom-row {
+  margin-bottom: 3rem;
+}
+
+:host::ng-deep .progress{
+  background-color: unset !important;
+  padding: 0 0 50px 0;
+}
+
+:host::ng-deep mat-seek-progress-control{
+  width: 100%;
+}
+
