@@ -3,14 +3,17 @@ import { LogInComponent } from './log-in/log-in.component';
 import {SharedModule} from '../shared/shared.module';
 import {RouterModule, Routes} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: '', component: LogInComponent}
+  { path: 'login', component: LogInComponent},
+  { path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({
   declarations: [
-    LogInComponent
+    LogInComponent,
+    RegisterComponent
   ],
   imports: [
     SharedModule,

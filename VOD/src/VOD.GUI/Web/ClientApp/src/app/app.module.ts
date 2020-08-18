@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'videos', loadChildren: () => import('./video/video.module').then(v => v.VideoModule) },
-  { path: 'login', loadChildren: () => import('./user/user.module').then(u => u.UserModule) },
+  { path: 'user', loadChildren: () => import('./user/user.module').then(u => u.UserModule) },
   { path: 'not-found', component: NotFoundComponent},
   { path: '**', redirectTo: 'not-found' }
 ];

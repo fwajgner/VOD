@@ -46,6 +46,10 @@
         {
             user.CreationDate = DateTimeOffset.Now;
             IdentityResult result = await _userManager.CreateAsync(user, password);
+            if (!result.Succeeded)
+            {
+                return false;
+            }
             IdentityResult roleResult = await _userManager.AddToRoleAsync(user, RegisteredUser);
 
             return result.Succeeded && roleResult.Succeeded;
