@@ -9,4 +9,6 @@ Technologies used:
 - Docker
 
 Screenshot:
-<img src="https://images.tinypic.pl/i/01008/v86d859ab88d.png"></img>
+<img src="https://i.ibb.co/G5YFHCX/vod-movies.png"></img>
+
+<img src="https://i.ibb.co/tYVKNZf/vod-details.png"></img>
